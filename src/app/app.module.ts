@@ -4,17 +4,20 @@ import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { AppComponent } from './app.component';
+import { SequenceComponent } from './sequence/sequence.component';
+import { SequenceService } from "./shared/sequence.service";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SequenceComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule
   ],
-  providers: [],
+  providers: [SequenceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
