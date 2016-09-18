@@ -4,13 +4,14 @@ import "rxjs/add/observable/range";
 import "rxjs/add/observable/never";
 import "rxjs/add/operator/delay"
 import "rxjs/add/operator/repeat"
+import "rxjs/add/operator/share"
 
 @Injectable()
 export class SequenceService {
   public sequence:Observable<number>;
 
   constructor() {
-    this.sequence = Observable.never();
+    this.sequence = Observable.never().share();
   }
 
   getSequence(begin:number = 1, end:number = 100, delay:number = 1000, isRepeatable:boolean = true):void {
@@ -21,6 +22,8 @@ export class SequenceService {
     if(isRepeatable) {
       this.sequence = this.sequence.repeat()
     }
+
+    this.sequence.share();
   }
 
 }
