@@ -14,7 +14,7 @@ export class SequenceService {
     this.sequence = Observable.never().share();
   }
 
-  getSequence(begin:number = 1, end:number = 100, delay:number = 1000, isRepeatable:boolean = true):void {
+  public initSequence(begin:number = 1, end:number = 100, delay:number = 1000, isRepeatable:boolean = false):void {
 
     this.sequence = Observable.range(begin, end)
         .delay(delay);

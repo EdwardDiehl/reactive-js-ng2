@@ -1,3 +1,21 @@
 <p>
   sequence works!
 </p>
+
+<input type="number" [(ngModel)]="begin"/>
+<input type="number" [(ngModel)]="end"/>
+<input type="number" [(ngModel)]="delay"/>
+<input type="checkbox" [(ngModel)]="isRepeatable"/>
+<button (click)="getItems()">Get sequence items</button>
+
+<div *ngFor="let item of items">
+  {{ item }}
+</div>
+
+<div *ngIf="isCompleted">
+  COMPLETED
+</div>
+
+<div *ngIf="error">
+  {{ error }}
+</div>
