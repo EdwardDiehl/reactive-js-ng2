@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SequenceService } from "../shared/sequence.service";
 import { Observable } from "rxjs/Observable";
+import { Subject } from 'rxjs/Subject';
 import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
@@ -21,14 +22,12 @@ export class SequenceComponent implements OnInit {
   private items:Array<number> = [];
 
   constructor(private  sequenceService:SequenceService) {
+    this.sequenceService.controlObservable = new Subject();
   }
 
   private initSequence():void {
     if(this.subscription) {
-
-      // TODO: try takeUntil()
-      // https://medium.com/@benlesh/rxjs-dont-unsubscribe-6753ed4fda87#.u66frtjrd
-      this.subscription.unsubscribe();
+      this.stopSequence;
       this.error = null;
       this.isCompleted = false;
     }
@@ -45,14 +44,19 @@ export class SequenceComponent implements OnInit {
     );
   }
 
-  public getItems():void {
+  public startSequence():void {
     this.items = [];
 
     this.initSequence();
     this.initSubscription();
   }
 
+  public stopSequence():void {
+    debugger;
+    this.sequenceService.controlObservable.complete();
+  }
+
   ngOnInit() {
-    this.getItems()
+    this.startSequence()
   }
 }

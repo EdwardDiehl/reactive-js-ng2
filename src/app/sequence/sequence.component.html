@@ -6,7 +6,8 @@
 <input type="number" [(ngModel)]="end"/>
 <input type="number" [(ngModel)]="delay"/>
 <input type="checkbox" [(ngModel)]="isRepeatable"/>
-<button (click)="getItems()">Get sequence items</button>
+<button (click)="startSequence()">Start</button>
+<button (click)="stopSequence()">Stop</button>
 
 <div *ngFor="let item of items">
   {{ item }}

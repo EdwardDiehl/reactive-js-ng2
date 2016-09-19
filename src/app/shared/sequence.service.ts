@@ -13,6 +13,7 @@ import { SequenceStates } from "./sequence-states.enum"
 @Injectable()
 export class SequenceService {
   public sequence:Observable<number>;
+  public controlObservable;  //observable:Observable<any>
   public state;
 
   constructor() {
@@ -21,7 +22,6 @@ export class SequenceService {
   }
 
   public initSequence(begin:number = 1, end:number = 100, delay:number = 1000, isRepeatable:boolean = false):void {
-
     this.sequence = Observable.range(begin, end)
         .delay(delay);
 
@@ -29,7 +29,8 @@ export class SequenceService {
       this.sequence = this.sequence.repeat()
     }
 
-    this.sequence.share();
+    this.sequence = this.sequence
+        .takeUntil(this.controlObservable)
+        .share();
   }
-
 }
