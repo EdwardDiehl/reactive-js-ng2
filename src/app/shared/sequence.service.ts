@@ -1,24 +1,31 @@
 import { Injectable } from '@angular/core';
 import { Observable } from  "rxjs/Observable";
+import { Subject } from 'rxjs/Subject';
 
 import "rxjs/add/observable/range";
 import "rxjs/add/observable/never";
+
 import "rxjs/add/operator/delay"
 import "rxjs/add/operator/repeat"
 import "rxjs/add/operator/share"
 import "rxjs/add/operator/takeUntil"
 
+// TODO add proper states management
 import { SequenceStates } from "./sequence-states.enum"
 
 @Injectable()
 export class SequenceService {
   public sequence:Observable<number>;
-  public controlObservable;  //observable:Observable<any>
-  public state;
+  private state;
+
+  private stop:Subject<string> = new Subject();
 
   constructor() {
-    this.sequence = Observable.never().share();
-    this.state = SequenceStates.Pending;
+    this.setState(SequenceStates.NotInitialized);
+  }
+
+  public setState(state) {
+    this.state = state
   }
 
   public initSequence(begin:number = 1, end:number = 100, delay:number = 1000, isRepeatable:boolean = false):void {
@@ -30,7 +37,14 @@ export class SequenceService {
     }
 
     this.sequence = this.sequence
-        .takeUntil(this.controlObservable)
+        .takeUntil(this.stop)
         .share();
+
+    this.setState(SequenceStates.Initialized);
+  }
+
+  public stopSequence():void {
+    this.stop.next();
+    this.setState(SequenceStates.Stopped);
   }
 }

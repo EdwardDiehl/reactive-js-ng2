@@ -1,5 +1,6 @@
 export enum SequenceStates {
-    Pending,
+    NotInitialized,
+    Initialized,
     Running,
     Stopped
 }

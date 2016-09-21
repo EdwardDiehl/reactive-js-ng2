@@ -1,7 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { SequenceService } from "../shared/sequence.service";
 import { Observable } from "rxjs/Observable";
-import { Subject } from 'rxjs/Subject';
 import { Subscription }   from 'rxjs/Subscription';
 
 @Component({
@@ -22,16 +21,16 @@ export class SequenceComponent implements OnInit {
   private items:Array<number> = [];
 
   constructor(private  sequenceService:SequenceService) {
-    this.sequenceService.controlObservable = new Subject();
   }
 
   private initSequence():void {
     if(this.subscription) {
-      this.stopSequence;
+      this.stopSequence();
       this.error = null;
       this.isCompleted = false;
     }
 
+    // TODO return seqeunce from initSequence method
     this.sequenceService.initSequence(this.begin, this.end, this.delay, this.isRepeatable);
     this.sequence = this.sequenceService.sequence;
   }
@@ -52,8 +51,7 @@ export class SequenceComponent implements OnInit {
   }
 
   public stopSequence():void {
-    debugger;
-    this.sequenceService.controlObservable.complete();
+    this.sequenceService.stopSequence();
   }
 
   ngOnInit() {
