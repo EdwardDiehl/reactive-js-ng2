@@ -30,9 +30,7 @@ export class SequenceComponent implements OnInit {
       this.isCompleted = false;
     }
 
-    // TODO return seqeunce from initSequence method
-    this.sequenceService.initSequence(this.begin, this.end, this.delay, this.isRepeatable);
-    this.sequence = this.sequenceService.sequence;
+    this.sequence = this.sequenceService.initSequence(this.begin, this.end, this.delay, this.isRepeatable);
   }
 
   private initSubscription():void {

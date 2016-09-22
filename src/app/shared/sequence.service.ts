@@ -28,7 +28,9 @@ export class SequenceService {
     this.state = state
   }
 
-  public initSequence(begin:number = 1, end:number = 100, delay:number = 1000, isRepeatable:boolean = false):void {
+  public initSequence(begin:number = 1, end:number = 100, delay:number = 1000, isRepeatable:boolean = false):Observable<number> {
+    this.stopSequence();
+
     this.sequence = Observable.range(begin, end)
         .delay(delay);
 
@@ -41,6 +43,8 @@ export class SequenceService {
         .share();
 
     this.setState(SequenceStates.Initialized);
+    
+    return this.sequence
   }
 
   public stopSequence():void {
